@@ -1,0 +1,55 @@
+CREATE DATABASE Bookstore;
+
+USE Bookstore;
+
+CREATE TABLE Authors (
+  AuthorID INT PRIMARY KEY,
+  FirstName VARCHAR(255),
+  LastName VARCHAR(255)
+);
+
+
+CREATE TABLE Books (
+  BookID INT PRIMARY KEY,
+  Title VARCHAR(255),
+  AuthorID INT,
+  FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+);
+
+
+INSERT INTO Authors (AuthorID, FirstName, LastName)
+VALUES
+  (1, 'John', 'Doe'),
+  (2, 'Jane', 'Smith'),
+  (3, 'David', 'Johnson');
+
+INSERT INTO Books (BookID, Title, AuthorID)
+VALUES
+  (1, 'Book1', 1),
+  (2, 'Book2', 2),
+  (3, 'Book3', 3);
+
+//Query to retrieve the book with the title 'Book2':
+SELECT * FROM Books WHERE Title = 'Book2';
+
+//Query to update the author's last name to 'Smithson' for the book with the title 'Book1':
+UPDATE Authors
+SET LastName = 'Smithson'
+WHERE AuthorID = (
+  SELECT AuthorID
+  FROM Books
+  WHERE Title = 'Book1'
+);
+
+//Query to delete the author with the AuthorID 3 and all their associated books from the database
+DELETE FROM Authors WHERE AuthorID = 3;
+DELETE FROM Books WHERE AuthorID = 3;
+
+//Query to count the total number of books in the "Books" table
+SELECT COUNT(BookID) FROM Books;
+
+//Query to retrieve all books along with their authors' first and last names
+SELECT B.Title, A.FirstName, A.LastName
+FROM Books B
+JOIN Authors A ON B.AuthorID = A.AuthorID;
+
