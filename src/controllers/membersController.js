@@ -1,6 +1,44 @@
 const mssql = require('mssql')
 const config = require('../config')
 
+async function getAllMembers(req, res){
+
+    let sql =  await mssql.connect(config)
+
+    if(sql.connected){
+
+ 
+
+     let results = await sql.query(`SELECT * from dbo.Members`)
+
+     let products = results.recordset;
+
+     res.json({
+
+        success: true,
+
+        message: "fetched products successfully",
+
+        results: products
+
+       
+
+  })
+
+  }else{
+
+ 
+
+        res.status(500).send("Internal server error")
+
+     
+
+  }
+
+ 
+
+  }
+
 async function  getMemberById(req, res){
 
  
@@ -44,4 +82,4 @@ async function  getMemberById(req, res){
      }
 
 
-module.exports = getMemberById
+module.exports = {getMemberById,getAllMembers}
