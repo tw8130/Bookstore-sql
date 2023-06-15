@@ -86,10 +86,38 @@ async function getAllBooks(req, res){
 }
 
 
+//create new book
+async function createNewBook(req, res) {
+      try {
+        const { BookID, Title, Author, PublicationYear, Status } = req.body;
+    
+        // Perform validation checks if needed
+    
+        // Connect to the database
+        await mssql.connect(config);
+    
+        // Insert the new book into the "Books" table
+        await mssql.query`
+          INSERT INTO dbo.Books (BookID, Title, Author, PublicationYear, Status)
+          VALUES (${BookID}, ${Title}, ${Author}, ${PublicationYear}, ${Status})
+        `;
+    
+        res.status(201).json({ message: 'Book added successfully' });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal server error');
+      } finally {
+        // Close the database connection
+        mssql.close();
+      }
+    }
+  
 
 
 
-module.exports = {getAllBooks,  getBookById}
+
+
+module.exports = {getAllBooks,  getBookById, createNewBook}
 
 
 // , getSalesPerYear
