@@ -7,6 +7,8 @@ require('dotenv').config()
 const port = process.env.PORT || 4000
 
 const router = require('./src/routes/loansRouter');
+const router = require('./src/routes/booksRouter')
+const router = require('./src/routes/members.Routes')
 
 app.use(express.json());
 
