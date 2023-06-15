@@ -117,3 +117,50 @@ USE Library;
 
 -- END;
 
+-- CREATE PROCEDURE BorrowBookEndPoint
+    -- @MemberID INT,
+    -- @BookID INT
+
+-- AS
+-- BEGIN
+--     SET NOCOUNT ON;
+
+ 
+
+ 
+
+--     -- Checking if the book is available
+--     IF EXISTS (SELECT 1 FROM Books WHERE BookID = @BookID AND Status = 'Available')
+--     BEGIN
+
+ 
+
+--         INSERT INTO Loans (BookID, MemberID, LoanDate, ReturnDate)
+--         VALUES (@BookID, @MemberID, GETDATE(), DATEADD(DAY, 14, GETDATE()));
+
+ 
+
+ 
+
+--         UPDATE Books SET Status = 'Borrowed' WHERE BookID = @BookID;
+
+ 
+
+ 
+
+--         SELECT 'Book borrowed successfully.' AS [Status];
+--     END
+--     ELSE
+--     BEGIN
+--         SELECT 'Book is not available for borrowing.' AS [Status];
+--     END;
+-- END;
+-- GO
+
+ 
+
+
+-- EXEC dbo.BorrowBookEndPoint @MemberID = 1, @BookID = 3;
+
+
+
