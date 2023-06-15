@@ -69,7 +69,7 @@ async function getAllBooks(req, res){
   let sql =  await mssql.connect(config)
   if(sql.connected){
 
-   let results = await sql.query(`SELECT * from dbo.Books`)
+   let results = await sql.query(`SELECT * from dbo.Books  WHERE Status = 'Available'`)
    let products = results.recordset;
    res.json({
       success: true,
