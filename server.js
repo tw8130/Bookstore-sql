@@ -12,6 +12,7 @@ app.get('/', (req, res)=>{
 })
 
 const router = require('./src/routes/booksRouter')
+const router = require('./src/routes/members.Routes')
 const port = process.env.PORT || 4000
 app.use('/', router)
 app.listen(port, ()=>console.log(`Server on port ${port}`))
