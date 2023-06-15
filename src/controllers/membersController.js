@@ -1,5 +1,6 @@
 const mssql = require('mssql')
 const config = require('../config')
+//create new member
 
 async function createNewMember(req, res) {
 
