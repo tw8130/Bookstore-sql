@@ -9,7 +9,7 @@ const port = process.env.PORT || 4000
 const router = require('./src/routes/loansRouter');
 const booksRouter = require('./src/routes/booksRouter')
 const membersRouter = require('./src/routes/members.Routes')
-    // const userRouter = require('./src/routes/userRouter');
+const userRouter = require('./src/routes/userRouter');
 
 app.use(express.json());
 
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use('/', router);
 app.use('/books', booksRouter);
 app.use('/members', membersRouter);
-// app.use('/users', userRouter);
+app.use('/users', userRouter);
 // Register the user routes
 // app.use('/users', userRoutes);
 // Register the books routes
