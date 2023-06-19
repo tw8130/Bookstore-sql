@@ -1,12 +1,12 @@
-const {getMemberById,getAllMembers,createNewMember} = require ('../controllers/membersController')
+const { getMemberById, getAllMembers, createNewMember } = require('../controllers/membersController')
 
 
 const express = require('express')
 
-const router = express.Router()
+const membersRouter = express.Router()
 
-router.get('/members', getAllMembers)
-router.get('/members/:member_id', getMemberById)
-router.post('/members/:member_id', createNewMember)
+membersRouter.get('/members', getAllMembers)
+membersRouter.get('/members/:member_id', getMemberById)
+membersRouter.post('/members/:member_id', createNewMember)
 
-module.exports =router
+module.exports = membersRouter
