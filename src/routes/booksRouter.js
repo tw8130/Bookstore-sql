@@ -1,5 +1,5 @@
 const { getAllBooks, getBookById, createNewBook } = require('../controllers/booksController')
-const { authenticateToken } = require('../utilis/auth');
+const { authenticateToken } = require('../middlewares/auth');
 
 
 const express = require('express')
