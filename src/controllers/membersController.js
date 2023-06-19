@@ -1,28 +1,29 @@
 const mssql = require('mssql')
-const config = require('../config')
+const config = require('../config/config')
+
 //create new member
 
 async function createNewMember(req, res) {
 
-      try {
+    try {
 
         const { MemberID, Name, Address, ContactNumber } = req.body;
 
-   
+
 
         // Perform validation checks if needed
 
-   
+
 
         // Connect to the database
 
         await mssql.connect(config);
 
-   
+
 
         // Insert the new book into the "Books" table
 
-        await mssql.query`
+        await mssql.query `
 
           INSERT INTO dbo.Members (MemberID, Name, Address, ContactNumber)
 
@@ -30,77 +31,77 @@ async function createNewMember(req, res) {
 
         `;
 
-   
+
 
         res.status(201).json({ message: 'Member added successfully' });
 
-      } catch (error) {
+    } catch (error) {
 
         console.error(error);
 
         res.status(500).send('Internal server error');
 
-      } finally {
+    } finally {
 
         // Close the database connection
 
         mssql.close();
 
-      }
-
     }
 
-async function getAllMembers(req, res){
+}
 
-    let sql =  await mssql.connect(config)
+async function getAllMembers(req, res) {
 
-    if(sql.connected){
+    let sql = await mssql.connect(config)
 
- 
+    if (sql.connected) {
 
-     let results = await sql.query(`SELECT * from dbo.Members`)
 
-     let products = results.recordset;
 
-     res.json({
+        let results = await sql.query(`SELECT * from dbo.Members`)
 
-        success: true,
+        let products = results.recordset;
 
-        message: "fetched products successfully",
+        res.json({
 
-        results: products
+            success: true,
 
-       
+            message: "fetched products successfully",
 
-  })
+            results: products
 
-  }else{
 
- 
+
+        })
+
+    } else {
+
+
 
         res.status(500).send("Internal server error")
 
-     
 
-  }
 
- 
+    }
 
-  }
 
-async function  getMemberById(req, res){
 
- 
+}
+
+async function getMemberById(req, res) {
+
+
 
     let { member_id } = req.params
 
-    let sql =await mssql.connect(config)
+    let sql = await mssql.connect(config)
 
- 
 
-    if(sql.connected){
 
- 
+    if (sql.connected) {
+
+
 
         let results = await sql.query(`SELECT * from dbo.Members where MemberID = ${Number(member_id)}`)
 
@@ -108,27 +109,27 @@ async function  getMemberById(req, res){
 
         res.status(200).json({
 
-           success: true,
+            success: true,
 
-           message: "fetched products successfully",
+            message: "fetched products successfully",
 
-           results: products
-
-         
-
-     })
-
-     }else{
-
-     
-
-           res.status(500).send("Internal server error")
-
-         
-
-     }
-
-     }
+            results: products
 
 
-module.exports = {getMemberById,getAllMembers,createNewMember}
+
+        })
+
+    } else {
+
+
+
+        res.status(500).send("Internal server error")
+
+
+
+    }
+
+}
+
+
+module.exports = { getMemberById, getAllMembers, createNewMember }

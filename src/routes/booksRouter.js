@@ -1,15 +1,21 @@
-const {getAllBooks, getBookById, createNewBook} = require ('../controllers/booksController')
-// , getSalesPerYear
+const { getAllBooks, getBookById, createNewBook } = require('../controllers/booksController')
+const { authenticateToken } = require('../utilis/auth');
+
 
 const express = require('express')
 
-const router = express.Router()
+const booksRouter = express.Router()
 
-router.get('/books', getAllBooks)
-router.get('/books/:book_id', getBookById)
-router.post('/books', createNewBook)
+booksRouter.get('/books', getAllBooks)
 
-// router.get('products/sales/:page/:limit/:year', getSalesPerYear)
+booksRouter.get('/books/:book_id', getBookById)
+booksRouter.post('/books', createNewBook)
+    // Route for getting all books (requires authentication)
+
+booksRouter.use(authenticateToken)
+booksRouter.get('/', getAllBooks);
 
 
-module.exports =router
+
+
+module.exports = booksRouter

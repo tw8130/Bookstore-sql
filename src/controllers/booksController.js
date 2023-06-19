@@ -1,6 +1,5 @@
-
 const mssql = require('mssql')
-const config = require('../config')
+const config = require('../config/config')
 
 //when dealing with databases functions are async
 
@@ -8,7 +7,7 @@ const config = require('../config')
 // async function getSalesPerYear(req, res){
 
 //     let {page, limit, year} = req.params
-    
+
 //     let sql = await mssql.connect(config)
 //     if(sql.connected){
 //        let results = await sql.request()
@@ -25,99 +24,99 @@ const config = require('../config')
 
 //               page,
 //               record: results.recordset.length
-                 
+
 // },
 // data: results.recordset
 
 // }
-        
+
 // }) 
 
 // }
-    
+
 // }
 
 
-async function  getBookById(req, res){
-  
-    let { book_id } = req.params
-    let sql =await mssql.connect(config)
+async function getBookById(req, res) {
 
-    if(sql.connected){
+    let { book_id } = req.params
+    let sql = await mssql.connect(config)
+
+    if (sql.connected) {
 
         let results = await sql.query(`SELECT * from dbo.Books where BookID = ${Number(book_id)}`)
         let products = results.recordset[0];
         res.status(200).json({
-           success: true,
-           message: "fetched products successfully",
-           results: products
-          
-     })
-     }else{
-     
-           res.status(500).send("Internal server error")
-         
-     }
-     
-   
+            success: true,
+            message: "fetched products successfully",
+            results: products
+
+        })
+    } else {
+
+        res.status(500).send("Internal server error")
+
+    }
+
+
 }
 
 
 
 
-async function getAllBooks(req, res){
-  let sql =  await mssql.connect(config)
-  if(sql.connected){
+async function getAllBooks(req, res) {
+    let sql = await mssql.connect(config)
+    if (sql.connected) {
 
-   let results = await sql.query(`SELECT * from dbo.Books  WHERE Status = 'Available'`)
-   let products = results.recordset;
-   res.json({
-      success: true,
-      message: "fetched products successfully",
-      results: products
-     
-})
-}else{
+        let results = await sql.query(`SELECT * from dbo.Books  WHERE Status = 'Available'`)
+        let products = results.recordset;
+        res.json({
+            success: true,
+            message: "fetched products successfully",
+            results: products
 
-      res.status(500).send("Internal server error")
-    
-}
+        })
+    } else {
+
+        res.status(500).send("Internal server error")
+
+    }
 
 }
 
 
 //create new book
 async function createNewBook(req, res) {
-      try {
+    try {
         const { BookID, Title, Author, PublicationYear, Status } = req.body;
-    
+
         // Perform validation checks if needed
-    
+
         // Connect to the database
         await mssql.connect(config);
-    
+
         // Insert the new book into the "Books" table
-        await mssql.query`
+        await mssql.query `
           INSERT INTO dbo.Books (BookID, Title, Author, PublicationYear, Status)
           VALUES (${BookID}, ${Title}, ${Author}, ${PublicationYear}, ${Status})
         `;
-    
+
         res.status(201).json({ message: 'Book added successfully' });
-      } catch (error) {
+    } catch (error) {
         console.error(error);
         res.status(500).send('Internal server error');
-      } finally {
+    } finally {
         // Close the database connection
         mssql.close();
-      }
     }
-  
+}
 
 
 
 
 
-module.exports = {getAllBooks,  getBookById, createNewBook}
+
+module.exports = { getAllBooks, getBookById, createNewBook }
 
 
 // , getSalesPerYear
