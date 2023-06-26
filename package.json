@@ -2,9 +2,9 @@
   "name": "bookstore",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.0",
     "mssql": "^9.1.1",
+    "node-cron": "^3.0.2",
     "nodemailer": "^6.9.3",
     "nodemon": "^2.0.22"
   }

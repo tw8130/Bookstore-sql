@@ -48,7 +48,7 @@ async function getBookById(req, res) {
         let products = results.recordset[0];
         res.status(200).json({
             success: true,
-            message: "fetched products successfully",
+            message: "fetched book by id successfully",
             results: products
 
         })
@@ -72,7 +72,7 @@ async function getAllBooks(req, res) {
         let products = results.recordset;
         res.json({
             success: true,
-            message: "fetched products successfully",
+            message: "fetched All books successfully",
             results: products
 
         })
