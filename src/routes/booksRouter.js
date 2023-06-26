@@ -9,7 +9,7 @@ const booksRouter = express.Router()
 booksRouter.get('/books', getAllBooks)
 
 booksRouter.use(authenticateToken)
-booksRouter.get('/books/:book_id', getBookById)
+booksRouter.get('/books', getBookById)
 
 
 booksRouter.post('/books', createNewBook)

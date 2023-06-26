@@ -17,8 +17,8 @@ router.post('/check-overdue-books', async (req, res) => {
     }
   });
 router.get('/members/books-borrowed', getMembersWhoBorrowed)
-router.post('/return/:MemberID/:BookID', returnBook);
-router.post('/borrow/:MemberID/:BookID', borrowBook);
+router.post('/return', returnBook);
+router.post('/borrow', borrowBook);
 // router.get('/', getBorrowedBook)
 
 

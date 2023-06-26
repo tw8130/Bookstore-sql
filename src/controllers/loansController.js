@@ -56,7 +56,7 @@ async function returnBook(req, res) {
 
     try {
 
-        const { MemberID, BookID } = req.params;
+        const { MemberID, BookID } = req.body;
 
 
 
@@ -166,7 +166,7 @@ async function returnBook(req, res) {
 //     }
 // }
 async function borrowBook(req, res) {
-    const { MemberID, BookID } = req.params;
+    const { MemberID, BookID } = req.body;
 
     try {
         await mssql.connect(config);

@@ -39,7 +39,7 @@ const config = require('../config/config')
 
 async function getBookById(req, res) {
 
-    let { book_id } = req.params
+    let { book_id } = req.body
     let sql = await mssql.connect(config)
 
     if (sql.connected) {

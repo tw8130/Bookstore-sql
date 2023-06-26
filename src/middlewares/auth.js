@@ -19,7 +19,7 @@ const authenticateToken = (req, res, next) => {
           next();
         } else if (userRole === 'user') {
           // Restrict access for users
-          const allowedFunctions = ['/borrow/:MemberID/:BookID', '/books/:book_id','/members/books-borrowed','/return/:MemberID/:BookID', '/books'];
+          const allowedFunctions = ['/borrow', '/books/books','/members/books-borrowed','/return', '/books'];
           const requestedFunction = req.originalUrl; // Assuming the function name is provided in the request body
           console.log(requestedFunction)
 
