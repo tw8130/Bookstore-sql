@@ -67,7 +67,7 @@ async function getAllMembers(req, res) {
 
             success: true,
 
-            message: "fetched products successfully",
+            message: "fetched All members successfully",
 
             results: products
 
@@ -111,7 +111,7 @@ async function getMemberById(req, res) {
 
             success: true,
 
-            message: "fetched products successfully",
+            message: "fetched member by id successfully",
 
             results: products
 

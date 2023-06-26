@@ -13,6 +13,7 @@ function newUserValidator(body) {
 
         let message = user.error.details.map((err) => err.message) //for this we pass through each error and return the message
         throw new Error(message.join("\n")) //here we join the message and return the message as a string 
+        
     } else {
         return user
     }

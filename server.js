@@ -14,11 +14,11 @@ const userRouter = require('./src/routes/userRouter');
 app.use(express.json());
 
 
-
+app.use('/members', membersRouter);
+app.use('/users', userRouter)
 app.use('/', router);
 app.use('/books', booksRouter);
-app.use('/members', membersRouter);
-app.use('/users', userRouter);
+;
 // Register the user routes
 // app.use('/users', userRoutes);
 // Register the books routes

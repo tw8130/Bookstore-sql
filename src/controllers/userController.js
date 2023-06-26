@@ -2,9 +2,11 @@ const mssql = require('mssql')
 const config = require('../config/config')
 const bcrypt = require('bcrypt')
 const getAUser = require('../utilis/getAUser')
-const { tokenGenerator } = require("../utilis/tokens")
+const { tokenGenerator } = require("../utilis/token")
 const { newUserValidator } = require('../validators/newUserValidator')
 
+
+const { sendMailRegisterUser } = require('../utilis/sendMail')
 
 module.exports = {
 
@@ -14,6 +16,7 @@ module.exports = {
             // let hashed_pwd = await bcrypt.hash(user.Password, salt)
 
         console.log(user)
+        const role = "user"
             // let valid_user = newUserValidator(user) 
         let { value } = newUserValidator(user) //we can just destructure this to get the value of what we are passing to the database in this case the fullName, contactNumber, address and password//remember we got rid of the if(sql.connected) block since by now we have handled all the errors and have a legit user
         console.log(value)
@@ -34,12 +37,16 @@ module.exports = {
                     .input("Address", value.Address)
                     .input("ContactNumber", value.ContactNumber)
                     .input("Password", hashed_pwd)
+                    .input("Email", value.Email)
+                    .input("Roles", role)
                     .execute("dbo.create_new_member")
 
 
                 console.log(results)
                 results.rowsAffected.length ? res.send({ success: true, message: 'Saved User' }) :
                     res.send({ success: false, message: 'An error occurred' })
+
+                sendMailRegisterUser(value.Email, value.Name)
             }
 
 
@@ -72,7 +79,7 @@ module.exports = {
                 let passwordsMatch = await bcrypt.compare(Password, user.Password)
                 console.log(passwordsMatch);
                 if (passwordsMatch) {
-                    let token = await tokenGenerator({ MemberID: user.MemberID, roles: "admin" });
+                    let token = await tokenGenerator({ MemberID: user.MemberID, roles: user.Roles });
                     res.json({ success: true, message: "Logged in successfully", token });
                 } else {
                     res.status(401).json({ success: false, message: "Wrong user credentials", results: `${user.Password} ${Password}` });
