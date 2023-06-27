@@ -5,13 +5,49 @@ const config = require('../config/config');
 const {
     sendMailBorrowedBook,
     sendMailReturnBook,
-  
+
 } = require("../utilis/sendMail")
 
 
 const sendEmailToBorrower = require("../utilis/sendMailCron")
 
 
+// Get a specific member with a list of books they borrowed
+async function getAMemberWhoBorrowed(req, res) {
+    const { MemberID } = req.body;
+    try {
+
+
+        await mssql.connect(config);
+
+
+
+        const request = new mssql.Request();
+
+        request.input('MemberID', mssql.Int, MemberID);
+
+
+        const results = await request.execute('GetMemberBooks');
+
+        res.status(200).json(results.recordset[0]);
+
+
+
+    } catch (error) {
+
+        console.error('Error getting  a member with books borrowed:', error);
+
+        // Handle error
+
+        res.status(500).json({ error: 'An error occurred while retrieving the data.' });
+
+    } finally {
+
+        mssql.close();
+
+    }
+
+}
 
 // Get a list of members who have borrowed a book
 
@@ -217,7 +253,7 @@ async function checkOverdueBooks() {
       
     `);
 
-//CRAZY STUFF///// WHERE CAST(GETDATE()AS DATE)
+        //CRAZY STUFF///// WHERE CAST(GETDATE()AS DATE)
 
         for (const row of result.recordset) {
             const loanDate = row.LoanDate;
@@ -254,4 +290,6 @@ cron.schedule('0 13 * * *', () => {
 
 
 //exporting modules
-module.exports = { getMembersWhoBorrowed, returnBook, borrowBook, checkOverdueBooks}
+module.exports = { getMembersWhoBorrowed, getAMemberWhoBorrowed, returnBook, borrowBook, checkOverdueBooks }
+    //exporting modules
+module.exports = { getMembersWhoBorrowed, getAMemberWhoBorrowed, returnBook, borrowBook, checkOverdueBooks }
